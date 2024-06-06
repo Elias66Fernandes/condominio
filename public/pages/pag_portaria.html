@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condomínio Two Towers</title>
+    <link rel="stylesheet" href="../css/styles-portaria.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="menu-lateral">
+        <div class="btn-expandir">
+            <i class="bi bi-list" id="btn-exp"></i>
+        </div>
+        <ul>
+            <li class="itens-menu" data-section="visitantes">
+                <a href="#" onclick="showScreen('tela_visitantes')">
+                    <span class="icon"> <i class="bi bi-person-badge-fill"></i> </span>
+                    <span class="txt-link">Visualizar Visitantes</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="reservas">
+                <a href="#" onclick="showScreen('tela_reservas')">
+                    <span class="icon"> <i class="bi bi-calendar"></i> </span>
+                    <span class="txt-link">Reservar Espaços</span>
+                </a>
+            </li>
+
+            <li class="itens-menu" data-section="manutencoes">
+                <a href="#" onclick="showScreen('tela_manutencoes')">
+                    <span class="icon"> <i class="bi bi-exclamation-octagon"></i> </span>
+                    <span class="txt-link">Manutenções</span>
+                </a>
+            </li>
+            <li class="itens-menu ativo" data-section="perfil">
+                <a href="#" onclick="showScreen('tela_perfil')">
+                    <span class="icon"> <i class="bi bi-person-circle"></i> </span>
+                    <span class="txt-link">Perfil</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="content">
+        <div id="visitantes" class="section">
+            <div id="tela_visitantes" class="screen ">
+                <h1>Visualizar Visitantes</h1>
+                <div class="form_data_visita">
+                    <label for="" id="label_visita">Data da Visita:</label>
+                    <input type="date" id="data_visitaAlterar" name="data_visita">
+
+                    <label for="" id="label_visita">Nome do Condômino:</label>
+                    <input type="text" id="nome_visitaAlterar" name="nome_visita">
+
+                        <input type="submit" id="btn_visita" value="Buscar">
+                </div>
+                <table id="tabela" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome do Visitante</th>
+                            <th>Nome do Condômino</th>
+                            <th>Data da Visita</th>
+                            <th>CPF</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div id="reservas" class="section">
+            <h1>Visualizar Agendamentos</h1>
+            <div id="tela_reservas">
+                <div id="form_data_agendamento">
+                    <label for="data_agendamento" id="label_agendamento">Data do Agendamento:</label>
+                    <input type="date" id="data_agendamento" name="data_agendamento">
+                    <input type="submit" id="btn_agendamento" value="Buscar">
+                </div>
+                
+                <table id="tabela_agendamentos" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Data de Início</th>
+                            <th>Data de Término</th>
+                            <th>Espaço Comum</th>
+                            <th>Responsável</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo-agendamentos">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    
+        <div id="manutencoes" class="section">
+            <div id="tela_manutencoes" class="screen ">
+                <h1>Manutenções</h1>
+                <div class="form_manutencao">
+                    <label for="nome">Tipo de Serviço:</label>
+                    <input type="text" id="servico" name="servico">
+
+                    <label for="data_manutencao">Data da Manutenção:</label>
+                    <input type="date" id="data_manutencao" name="data_manutencao">
+
+                    <input class="btn_manutencao" type="submit" value="Cadastrar Manutenção">
+                </div>
+            </div>
+        </div>
+        <div id="perfil" class="section active">
+            <div id="tela_perfil" class="screen active">
+                <h1>Perfil</h1>
+                <div id="informacoes">
+                    <div class="perfil-imagem">
+                        <img src="../images/foto-exemplo-perfil.jpg" alt="Foto Redonda" class="foto-redonda">
+                    </div>
+                    <p><strong>E-mail:</strong> exemplo@example.com</p>
+                    <p><strong>Nome:</strong> Nome do Usuário</p>
+                    <p><strong>CPF:</strong> 123.456.789-00</p>
+                    <p><strong>Data de Nascimento:</strong> 01/01/2000</p>
+                    <p><strong>Identificador:</strong> Portaria</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/menu.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Condomínio Two Towers</title>
+    <link rel="stylesheet" href="../static/styles/styles-login.css">
+</head>
+<body>
+    <div class="logo">
+        <img src="../static/images/logo-cond-login.png" alt="Logo do Condomínio">
+    </div>
+    <div class="login-container">
+        <h1>Bem-Vindo!</h1>
+        <p>Faça login para continuar</p>
+        <form id="loginForm" action="/usuario/login" method="post">
+            <label for="username">Usuário</label>
+            <input type="text" id="username" name="username" value="" required>
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <a href="/usuario/registro"><button type="button">Registro</button></a>
+    </div>
+</body>
+</html>

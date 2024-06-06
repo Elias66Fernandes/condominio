@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Condomínio Two Towers</title>
+    <link rel="stylesheet" href="../static/styles/styles-login.css">
+    <script>
+        function adicionarDependente() {
+            var divDependentes = document.getElementById('dependentes');
+            var contador = divDependentes.children.length + 1;
+
+            var novoDependente = document.createElement('div');
+            novoDependente.innerHTML = `
+                <label for="dependente_nome_${contador}">Nome do Dependente ${contador}</label>
+                <input type="text" id="dependente_nome_${contador}" name="dependente_nome_${contador}" required>
+                <label for="dependente_cpf_${contador}">CPF do Dependente ${contador}</label>
+                <input type="text" id="dependente_cpf_${contador}" name="dependente_cpf_${contador}" required>
+            `;
+
+            divDependentes.appendChild(novoDependente);
+        }
+    </script>
+</head>
+<body>
+    <div class="logo">
+        <img src="../static/images/logo-cond-login.png" alt="Logo do Condomínio">
+    </div>
+    <div class="login-container">
+        <h1>Crie sua conta!</h1>
+        <p>Preencha os campos abaixo para se registrar</p>
+        <form id="registerForm" action="/usuario/registro" method="post" enctype="application/x-www-form-urlencoded">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="username">Usuário</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" required>
+            <label for="data_nascimento">Data de Nascimento</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" required>
+            <label for="ctt">Contato</label>
+            <input type="text" id="ctt" name="ctt" required>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required>
+            <label for="identificador">Identificador</label>
+            <input type="text" id="identificador" name="identificador" required>
+            <label for="dependentes">Dependentes (se houver)</label>
+            <div id="dependentes">
+                <!-- O primeiro dependente é adicionado pelo JavaScript -->
+            </div>
+            <button type="button" onclick="adicionarDependente()">Adicionar Dependente</button>
+            <label for="admissao">Data de Admissão</label>
+            <input type="date" id="admissao" name="admissao" required>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(83, 114, 124, 1);
+}
+
+.login-container {
+    background: rgba(83, 114, 124, 1);
+    padding: 2em;
+    border-radius: 8px;
+    text-align: center;
+    width: 400px;
+    margin-left: 150px;
+}
+
+.login-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2em;
+}
+
+.logo img {
+    width: 540px;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+p {
+    color: #ffffff;
+    margin-bottom: 1.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    color: #ffffff;
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+}
+
+button {
+    padding: 0.7em;
+    background-color: rgba(32, 46, 50, 1);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 1em;
+    font-size: 1em;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 1.5em;
+}
+
+button:hover {
+    background-color: #555;
+}
