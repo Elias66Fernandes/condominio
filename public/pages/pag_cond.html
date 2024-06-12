@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        
+
         <div id="perfil" class="section active">
             <div id="tela_perfil" class="screen active">
                 <h1>Perfil</h1>
@@ -176,11 +176,40 @@
                     <p><strong>Nome:</strong> Nome do Usuário</p>
                     <p><strong>CPF:</strong> 123.456.789-00</p>
                     <p><strong>Data de Nascimento:</strong> 01/01/2000</p>
-                    <p><strong>Identificador:</strong>Condomino</p>
+                    <p><strong>Identificador:</strong> Condomino</p>
+                </div>
+                <div id="alter-user">
+                    <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
+                </div>
+    
+                <!-- Modal HTML -->
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Editar Informações</h2>
+                        <form id="editForm">
+                            <label for="nome">Nome:</label>
+                            <input type="text" id="nome" name="nome">
+                            
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email">
+    
+                            <label for="ctt">Contato:</label>
+                            <input type="text" id="ctt" name="ctt">
+    
+                            <label for="senha">Senha:</label>
+                            <input type="password" id="senha" name="senha">
+    
+                            <button type="submit">Salvar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-    <script src="../js/menu.js" src="../js/pegar_boleto.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/pegar_boleto.js"></script>
+    <script  src="../js/modal.js"></script>
 </body>
 </html>
