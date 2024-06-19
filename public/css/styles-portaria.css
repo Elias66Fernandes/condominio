@@ -102,10 +102,10 @@ nav.menu-lateral.expandir + .content {
 }
 
 /* parte do perfil*/
-#perfil{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#tela_perfil{
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
 }
 
 #perfil h1{
@@ -117,6 +117,7 @@ nav.menu-lateral.expandir + .content {
 #informacoes{
     height: 200px;
     font-size: 1.6rem;
+    text-align: center;
 }
 
 .perfil-imagem{
@@ -131,6 +132,99 @@ nav.menu-lateral.expandir + .content {
     border-radius: 50%;
     object-fit: cover; 
     border: 2px solid #000; 
+}
+
+#alter-user{
+    margin-top: 38%;
+}
+
+.alt-user{
+    cursor: pointer;
+    padding: 5px;
+    font-size: 22px;
+    background-color: rgba(255, 127, 80, 1);
+    border-radius: 20px;
+    border: none;
+}
+
+/* Estilos para a modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px; /* Location of the box */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 800px; /* Max width */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo do formulário dentro da modal */
+#editForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#editForm label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+#editForm input[type="text"],
+#editForm input[type="email"],
+#editForm input[type="password"],
+#editForm input[type="text"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+#editForm button[type="submit"] {
+    background-color: rgba(255, 127, 80, 1);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 200px;
+}
+
+#editForm button[type="submit"]:hover {
+    background-color: #FF5722;
 }
 
 /* parte dos visitantes*/
