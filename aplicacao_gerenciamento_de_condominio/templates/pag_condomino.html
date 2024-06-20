@@ -68,14 +68,10 @@
 
     <div class="content">
         
-        <div id="reservas" class="section">
+        <div id="reservas" class="section active">
             <div id="agendar_espaco" class="conteiner">
                 <h2>Agendar Espaço</h2>
-                <div class="buttons">
-                    <button onclick="showScreen('agendar_espaco_2')">Agendar Espaço</button>
-                </div>
-            
-                <div id="agendar_espaco_2" class="screen active">
+                <div id="agendar_espaco_2">
                     <form id="formAgendamento"  action="/agendamento" method="post" enctype="multipart/form-data">
                         <label for="data_inicio">Data de Início:</label>
                         <input type="datetime-local" id="data_inicio" name="data_inicio">
@@ -94,7 +90,7 @@
                         <div id="calendar-2"></div>
                     </div>
                 </div>
-        </div>
+            </div>
         </div>
 
         <div id="regulamentos" class="section">
@@ -119,7 +115,6 @@
                         <!-- Aqui ficam os dados da tabela requisição do back-->
                     </tbody>
                 </table>
-            </div>
             </div>
         </div>
         
@@ -174,10 +169,7 @@
             
             <div id="cadastrar_visitante" class="conteiner">
                 <h2>Cadastrar Visitantes</h2>
-                <div class="buttons">
-                    <button onclick="showScreen('cadastro_visitante_2')">Cadastrar</button>
-                </div>
-                <div id="cadastro_visitante_2" class="screen active">
+                <div id="cadastro_visitante_2">
                     <form id="formVisitante" action="/visitantes" method="post" enctype="application/x-www-form-urlencoded">
                         <label for="data_inicio">Data da Visita:</label>
                         <input type="date" id="data_visita" name="data_visita">

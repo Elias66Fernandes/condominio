@@ -151,8 +151,9 @@ nav.menu-lateral.expandir + .content {
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    align-items: left;
+    align-items: center;
 }
+
 
 /* Estilização do formulário */
 .conteiner form {
@@ -215,7 +216,7 @@ nav.menu-lateral.expandir + .content {
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    align-items: center;
+    align-items: left;
 }
 
 /* Estilização do formulário */
@@ -587,4 +588,17 @@ nav.menu-lateral.expandir + .content {
     cursor: pointer;
     margin-top: 20px;
     width: 200px;
+}
+
+#financeiro{
+    text-align: center;
+}
+
+#visitantes-1 input[type="text"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
 }
