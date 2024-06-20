@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condomínio Two Towers</title>
+    <link rel="stylesheet" href="../static/styles/styles-morador.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.6/main.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.6/main.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.6/main.min.css" rel="stylesheet" />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+</head>
+<body>
+    <nav class="menu-lateral">
+        <div class="btn-expandir">
+            <i class="bi bi-list" id="btn-exp"></i>
+        </div>
+        <ul>
+            <li class="itens-menu" data-section="reservas">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-calendar"></i> </span>
+                    <span class="txt-link">Reservar Espaços</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="regulamentos">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-file-earmark"></i> </span>
+                    <span class="txt-link">Regulamentos</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="manutencoes">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-exclamation-octagon"></i> </span>
+                    <span class="txt-link">Manutenções</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="financeiro">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-bank"></i> </span>
+                    <span class="txt-link">Financeiro</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="visitantes">
+                <a href="#">
+                    <span class="icon"><i class="bi bi-person-plus"></i></span>
+                    <span class="txt-link">Visitantes</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="perfil">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-person-circle"></i> </span>
+                    <span class="txt-link">Perfil</span>
+                </a>
+            </li>
+            <li class="itens-menu" id="logout">
+                <a href="/usuario/logout">
+                    <span class="icon"><i class="bi bi-box-arrow-right"></i></span>
+                    <span class="txt-link">Sair do Sistema</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        
+        <div id="reservas" class="section">
+            <div id="agendar_espaco" class="conteiner">
+                <h2>Agendar Espaço</h2>
+                <div class="buttons">
+                    <button onclick="showScreen('agendar_espaco_2')">Agendar Espaço</button>
+                </div>
+            
+                <div id="agendar_espaco_2" class="screen active">
+                    <form id="formAgendamento"  action="/agendamento" method="post" enctype="multipart/form-data">
+                        <label for="data_inicio">Data de Início:</label>
+                        <input type="datetime-local" id="data_inicio" name="data_inicio">
+                        
+                        <label for="data_fim">Data de Término:</label>
+                        <input type="datetime-local" id="data_fim" name="data_fim">
+                        
+                        <label for="espaco_id">Espaço Comum:</label>
+                        <select id="select-espaco-comum" name="espaco_id">
+                            <!-- Opções de espaços comuns serão preenchidas dinamicamente aqui -->
+                        </select>
+                        <input type="text" id="usuarios_id" name="usuarios_id" hidden>
+                        <input type="submit" value="Agendar">
+                    </form>
+                    <div class="">
+                        <div id="calendar-2"></div>
+                    </div>
+                </div>
+        </div>
+        </div>
+
+        <div id="regulamentos" class="section">
+            <div id="visualizar_doc" class="conteiner" >
+                <p>Digite o ID do regulamento que deseja encontrar:</p>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="bi bi-search"></i></span>
+                    <input name="consulta" id="txt_doc_consulta" placeholder="Consultar" type="text" class="form-control">
+                </div>
+                <table id="tabela" class="table table-hover">
+                    <thead>
+                        <tr>
+                            
+                            <th>Id</th>
+                            <th>Titulo do documento</th>
+                            <th>Assunto do documento</th>
+                            <th>Data do documento</th>
+                            <th>Download Arquivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentacoes-table-body">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        
+        <div id="manutencoes" class="section">
+            <div id="tela_avisos" class="conteiner">
+                <h1>Avisos</h1>
+                <table id="tabela" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Manutenção</th>
+                            <th>Data da Manutenção</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="financeiro" class="section">
+            <h1>Financeiro</h1>
+            <div class="buttons">
+                <button onclick="showScreen('gerar_boleto')">Gerar Boleto</button>
+                <button onclick="showScreen('cadastrar_reclamacao')">Reclamar</button>
+            </div>
+
+            <div id="gerar_boleto" class="screen">
+                <h2>Gerar Boleto</h2>
+                <div id="boleto_container">
+                    <!-- O conteúdo do boleto será carregado aqui -->
+                </div>
+                <button id="download_button">Gerar último boleto cadastrado</button>
+            </div>
+
+            <div id="cadastrar_reclamacao" class="screen">
+                <h2>Reclamações sobre Boletos</h2>
+                <form id="form_reclamacao"  action="/taxas/reclamacao" method="post" enctype="multipart/form-data">
+                    <label for="data_boleto">Data do Boleto:</label>
+                        <input type="date" id="data_boleto" name="data_boleto">
+            
+                    <label for="descricao">Descrição da Reclamação:</label><br>
+                        <textarea id="descricao" name="descricao" rows="4" required></textarea><br>
+            
+                    <input type="submit" value="Enviar Reclamação">
+                </form>
+            </div>
+            
+        </div>
+
+        <div id="visitantes" class="section">
+            
+            <div id="cadastrar_visitante" class="conteiner">
+                <h2>Cadastrar Visitantes</h2>
+                <div class="buttons">
+                    <button onclick="showScreen('cadastro_visitante_2')">Cadastrar</button>
+                </div>
+                <div id="cadastro_visitante_2" class="screen active">
+                    <form id="formVisitante" action="/visitantes" method="post" enctype="application/x-www-form-urlencoded">
+                        <label for="data_inicio">Data da Visita:</label>
+                        <input type="date" id="data_visita" name="data_visita">
+                        
+                        <div id="visitantes-1">
+                            <!-- O primeiro visitante é adicionado pelo JavaScript -->
+                        </div>
+                        <div class="buttons-visitantes">
+                            <button type="button" onclick="adicionarvisitante()" class="buttons">Adicionar Visitante</button>
+                            <button type="button" onclick="excluirUltimovisitante()" class="buttons">Excluir Visitante</button>
+                        </div>
+                        <input type="text" id="id" name="id_visita" hidden>
+                        <input type="submit" value="Agendar">
+                    </form>
+                    <div class="conteiner">
+                        <table id="tabela" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Dia</th>
+                                    <th>Visitantes</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-visitantes">
+                                <!-- Aqui ficam os dados da tabela requisição do back-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="perfil" class="section">
+            <div id="tela_perfil" class="conteiner">
+                <h1>Perfil</h1>
+                <div>
+                    <div id="informacoes_perfil">
+                        </div>
+                        <div id="alter-user">
+                            <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
+                        </div>
+                </div>
+
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>Editar Informações</h2>
+                                <form id="editForm" action="/usuario/atualizar_perfil" method="post" enctype="multipart/form-data">
+                                    <label for="nome">Nome:</label>
+                                    <input type="text" id="nome_alterar" name="nome_alterar">
+                                    
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email_alterar" name="email_alterar">
+            
+                                    <label for="ctt">Contato:</label>
+                                    <input type="text" id="ctt_alterar" name="ctt_alterar">
+            
+                                    <label for="senha">Senha:</label>
+                                    <input type="password" id="senha_alterar" name="senha_alterar">
+                                    
+                                    <label for="file">Foto do Usuário:</label>
+                                    <input type="file" name="file_alterar" id="file_modal" accept=".png, .jpeg, .jpg">
+                                    <button type="submit">Salvar</button>
+                                </form>
+                            </div>
+                        </div>
+    
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <script src="../static/js/menu.js"></script>
+    <script>
+
+        function loadUserProfile() {
+            $.ajax({
+                url: `/usuario/perfil`,
+                method: 'GET',
+                success: function(data) {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        var data_temporal = new Date(data.data_nascimento);
+
+                        // Dias da semana
+                        var diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+
+                        // Mês
+                        var meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+                        // Formatar a data e o dia da semana
+                        var diaDaSemana = diasDaSemana[data_temporal.getUTCDay()];
+                        var dia = data_temporal.getUTCDate();
+                        var mes = meses[data_temporal.getUTCMonth()];
+                        var ano = data_temporal.getUTCFullYear();
+                        data_corrigida = diaDaSemana + ', ' + dia + ' ' + mes + ' ' + ano; // Substitua 'data' pelo campo correto da sua API
+                        $('#informacoes_perfil').html(`
+                            <div class="perfil-imagem">
+                                <img src="data:image/jpeg;base64,${data.imagem}" alt="Foto Redonda" class="foto-redonda">
+                            </div>
+                            <p><strong>E-mail:</strong> ${data.email}</p>
+                            <p><strong>Nome:</strong> ${data.nome}</p>
+                            <p><strong>CPF:</strong> ${data.cpf}</p>
+                            <p><strong>Data de Nascimento:</strong> ${data_corrigida}</p>
+                            <p><strong>Identificador:</strong> ${data.identificador}</p>
+                        `);
+
+                        document.getElementById('nome_alterar').value = data.nome;
+                        document.getElementById('email_alterar').value = data.email;
+                        document.getElementById('ctt_alterar').value = data.ctt;
+                        document.getElementById('senha_alterar').value = data.senha;
+                    }
+                },
+                error: function() {
+                    alert('Erro ao buscar dados do usuário.');
+                }
+            });
+        }
+
+        var modal = document.getElementById("editModal");
+            var btn = document.getElementById("editBtn");
+            var span = document.getElementsByClassName("close")[0];
+
+            // Quando o usuário clicar no botão, abre a modal
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // Quando o usuário clicar no X, fecha a modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // Quando o usuário clicar fora da modal, fecha a modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+        $(document).ready(function() {
+            loadUserProfile();
+        });
+
+        function adicionarvisitante() {
+            var divvisitantes = document.getElementById('visitantes-1');
+            var contador = divvisitantes.children.length + 1;
+
+            var novovisitante = document.createElement('div');
+            novovisitante.innerHTML = `
+                <label for="visitante_nome_${contador}">Nome do visitante ${contador}</label>
+                <input type="text" id="visitante_nome_${contador}" name="visitante_nome_${contador}" required>
+                <label for="visitante_cpf_${contador}">CPF do visitante ${contador}</label>
+                <input type="text" id="visitante_cpf_${contador}" name="visitante_cpf_${contador}" required>
+            `;
+
+            divvisitantes.appendChild(novovisitante);
+            return false;
+        }
+        function excluirUltimovisitante() {
+            var divvisitantes = document.getElementById('visitantes-1');
+            if (divvisitantes.children.length > 0) {
+                divvisitantes.removeChild(divvisitantes.lastElementChild);
+            } else {
+                alert("Não há visitantes para excluir.");
+            }
+            return false;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchEspacosComuns();
+            // Verifica se o FullCalendar foi carregado corretamente
+            if (typeof FullCalendar !== 'undefined') {
+                console.log("FullCalendar carregado com sucesso.");
+            } else {
+                console.error("Erro ao carregar o FullCalendar.");
+                return;
+            }
+
+            var agendamentos = [];
+            var locais = [];
+            var calendarEl = document.getElementById('calendar-2');
+
+            // Primeira requisição para obter os espaços comuns
+            $.ajax({
+                url: '/espacoscomuns',
+                type: 'GET',
+                success: function(response) {
+                    // Manipular os eventos obtidos da API aqui
+                    for (var indice in response) {
+                        locais.push({
+                            'id': response[indice]['id'],
+                            'nome': response[indice]['name']
+                        });
+                    }
+                    
+                    // Segunda requisição para obter os agendamentos
+                    $.ajax({
+                        url: '/agendamento',
+                        type: 'GET',
+                        success: function(response) {
+                            // Manipular os eventos obtidos da API aqui
+                            for (var indice in response) {
+                                agendamentos.push({
+                                    'title': buscarNomePorId(locais, response[indice]['espaco_id']),
+                                    'start': response[indice]['data_inicio'],
+                                    'end': response[indice]['data_fim'],
+                                    'backgroundColor': '#ffcc00'
+                                });
+                            }
+                            
+                            // Cria o calendário com os agendamentos carregados
+                            criarCalendario2(agendamentos);
+                        },
+                        error: function(xhr, status, error) {
+                            // Manipular erros aqui
+                            console.error(xhr.responseText);
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Manipular erros aqui
+                    console.error(xhr.responseText);
+                }
+            });
+
+            function buscarNomePorId(locais, idProcurado) {
+                for (var i = 0; i < locais.length; i++) {
+                    if (locais[i]['id'] === idProcurado) {
+                        return locais[i]['nome'];
+                    }
+                }
+                return null;
+            }
+
+            function criarCalendario2(eventos) {
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    events: eventos
+                });
+                calendar.render();
+            }
+        });
+
+        function fetchEspacosComuns() {
+            fetch('/espacoscomuns') // Substitua pela URL correta da sua API
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    preencherSelectEspacosComuns(data);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        function preencherSelectEspacosComuns(espacos) {
+            var selectEspacoComum = document.getElementById('select-espaco-comum');
+
+            espacos.forEach(espaco => {
+                var option = document.createElement('option');
+                option.value = espaco.id;
+                option.textContent = espaco.name;
+                selectEspacoComum.appendChild(option);
+            });
+        }
+
+        function atualizarTabela() {
+            // Obter a tabela
+            var tabela = document.getElementById("tabela-corpo");
+
+            // Fazer a requisição para a API
+            fetch('/notificacoes')
+            .then(response => response.json())
+            .then(data => {
+                // Filtrar os dados com datas superiores à data atual
+                var hoje = new Date();
+                hoje.setUTCHours(0, 0, 0, 0); 
+                var dadosFiltrados = data.filter(item => new Date(item.data) >= hoje);
+                tabela.innerHTML = '';
+
+                // Iterar sobre os dados filtrados e inserir na tabela
+                dadosFiltrados.forEach(item => {
+                    var row = tabela.insertRow();
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var dataString = "Mon, 03 Jun 2024 00:00:00 GMT";
+
+                    // Criar um objeto Date a partir da string da data
+                    var data = new Date(item.data);
+
+                    // Dias da semana
+                    var diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+
+                    // Mês
+                    var meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+                    // Formatar a data e o dia da semana
+                    var diaDaSemana = diasDaSemana[data.getUTCDay()];
+                    var dia = data.getUTCDate();
+                    var mes = meses[data.getUTCMonth()];
+                    var ano = data.getUTCFullYear();
+                    cell1.innerHTML = item.mensagem; // Substitua 'tipo_manutencao' pelo campo correto da sua API
+                    cell2.innerHTML = diaDaSemana + ', ' + dia + ' ' + mes + ' ' + ano; // Substitua 'data' pelo campo correto da sua API
+                });
+            })
+            .catch(error => console.error('Erro:', error));
+        }
+
+        // Chamar a função para atualizar a tabela quando necessário
+        atualizarTabela();
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/documentacao/documento')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    const tableBody = document.getElementById('documentacoes-table-body');
+                    data.forEach(doc => {
+                        const row = document.createElement('tr');
+                        
+                        const idCell = document.createElement('td');
+                        idCell.textContent = doc.id;
+                        row.appendChild(idCell);
+                        
+                        const nomeCell = document.createElement('td');
+                        nomeCell.textContent = doc.nome;
+                        row.appendChild(nomeCell);
+                        
+                        const assuntoCell = document.createElement('td');
+                        assuntoCell.textContent = doc.assunto_documento;
+                        row.appendChild(assuntoCell);
+                        
+                        const dataCell = document.createElement('td');
+                        dataCell.textContent = doc.data;
+                        row.appendChild(dataCell);
+                        
+                        const actionCell = document.createElement('td');
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = `/documentacao/download/${doc.id}`;
+                        downloadLink.textContent = 'Download';
+                        actionCell.appendChild(downloadLink);
+                        row.appendChild(actionCell);
+
+                        
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching documentações:', error));
+        });
+        
+        async function fetchVisitantes() {
+            const response = await fetch('/visitantes/usuario'); // Substitua 'URL_DA_API' pela URL real da API
+            const data = await response.json();
+            return data;
+        }
+        function inserirNaTabela(agrupado) {
+            const tbody = document.getElementById('tabela-visitantes');
+            tbody.innerHTML = '';
+
+            for (const userId in agrupado) {
+                const tr = document.createElement('tr');
+                const tdUsername = document.createElement('td');
+                const tdVisitantes = document.createElement('td');
+
+                tdUsername.textContent = agrupado[userId].username;
+                tdVisitantes.textContent = agrupado[userId].visitantes.join(', ');
+
+                tr.appendChild(tdUsername);
+                tr.appendChild(tdVisitantes);
+                tbody.appendChild(tr);
+            }
+        }
+        async function processarDados() {
+            const dados_visitantes = await fetchVisitantes();
+            const tbody = document.getElementById('tabela-visitantes');
+            tbody.innerHTML = '';
+            dados_visitantes.forEach(registro=>{
+                const visitante = registro.visitantes.map(pessoa => `${pessoa.nome}: ${pessoa.cpf}`).join(', ');
+                const tr = document.createElement('tr');
+                const tdDia = document.createElement('td');
+                const tdVisitantes = document.createElement('td');
+                const acoes = document.createElement('td');
+
+                tdDia.textContent=registro.data_visita
+                tdVisitantes.textContent=visitante
+
+
+                const botaoAlterar = document.createElement('button');
+                botaoAlterar.textContent = 'Alterar';
+                botaoAlterar.addEventListener('click', () => {
+                    atualizarUsuario(registro)
+                    document.getElementById("data_visita").value = new Date(registro.data_visita).toISOString().split('T')[0];
+                    var form = document.getElementById('formVisitante');
+                    form.action = '/visitantes/atualizar';
+
+                    var inputIdvisita = document.getElementById('id');
+                    inputIdvisita.value = registro.id;
+                });
+
+                // Cria botão de Excluir
+                const botaoExcluir = document.createElement('button');
+                botaoExcluir.textContent = 'Excluir';
+                botaoExcluir.addEventListener('click', () => {
+                    // Lógica para excluir o registro
+                    if (confirm(`Deseja realmente excluir o registro de ${registro.data_visita}?`)) {
+                        // Remova a linha da tabela
+                        console.log("Caralho")
+                        // Adicione aqui a lógica para remover o registro do seu backend, se necessário
+                    }
+                });
+
+                // Adiciona os botões à célula de ações
+                acoes.appendChild(botaoAlterar);
+                acoes.appendChild(botaoExcluir);
+
+                tbody.appendChild(tdDia);
+                tbody.appendChild(tdVisitantes);
+                tbody.appendChild(acoes);
+                tbody.appendChild(tr);
+                console.log(tr)
+            })
+            /*
+            const agrupado = agruparPorUsuario(dados_visitantes, dados_usuarios);
+            inserirNaTabela(agrupado);*/
+        }
+        processarDados()
+
+        function atualizarUsuario(jsonUsuario) {
+    
+            var divDependentes = document.getElementById('visitantes-1');
+            var dependentes = jsonUsuario.visitantes;
+            divDependentes.innerHTML = '';
+            dependentes.forEach(function(dependente, index) {
+                var novoDependente = document.createElement('div');
+                
+                novoDependente.innerHTML = `
+                    <label for="dependente_nome_${index + 1}">Nome do Visitante ${index + 1}</label>
+                    <input type="text" id="visitante_nome_${index + 1}" name="visitante_nome_${index + 1}" value="${dependente.nome}" required>
+                    <label for="dependente_cpf_${index + 1}">CPF do Visitante ${index + 1}</label>
+                    <input type="text" id="visitante_cpf_${index + 1}" name="visitante_cpf_${index + 1}" value="${dependente.cpf}" required>
+                `;
+                divDependentes.appendChild(novoDependente);
+            });
+            console.log(divDependentes)
+        }
+
+        document.getElementById('download_button').addEventListener('click', function() {
+            // ID do usuário (você pode obter isso dinamicamente conforme necessário)
+            const userId = 1; // Exemplo de ID de usuário
+            const url = `/taxas/download_ultimo`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        throw new Error('Boleto não encontrado');
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'boleto.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar o boleto:', error);
+                    alert('Nenhum boleto encontrado');
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condomínio Two Towers</title>
+    <link rel="stylesheet" href="../static/styles/styles-adm.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.6/main.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.6/main.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.6/main.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.css' rel='stylesheet' />
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.6/main.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.6/main.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.6/main.global.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.4/luxon.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+
+</head>
+
+<body>
+    <nav class="menu-lateral">
+        <div class="btn-expandir">
+            <i class="bi bi-list" id="btn-exp"></i>
+        </div>
+        <ul>
+            <li class="itens-menu ativo" data-section="usuarios">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-person-lines-fill"></i> </span>
+                    <span class="txt-link">Gerenciar Usuários</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="reservas">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-calendar"></i> </span>
+                    <span class="txt-link">Reservar Espaços</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="regulamentos">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-file-earmark"></i> </span>
+                    <span class="txt-link">Regulamentos</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="manutencoes">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-exclamation-octagon"></i> </span>
+                    <span class="txt-link">Manutenções</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="financeiro">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-bank"></i> </span>
+                    <span class="txt-link">Financeiro</span>
+                </a>
+            </li>
+            <li class="itens-menu" data-section="perfil">
+                <a href="#">
+                    <span class="icon"> <i class="bi bi-person-circle"></i> </span>
+                    <span class="txt-link">Perfil</span>
+                </a>
+            </li>
+            <li class="itens-menu" id="logout">
+                <a href="/usuario/logout">
+                    <span class="icon"><i class="bi bi-box-arrow-right"></i></span>
+                    <span class="txt-link">Sair do Sistema</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="content">
+        <div id="usuarios" class="section active">
+            <h1>Gerenciar Usuários</h1>
+            <div class="buttons">
+                <button onclick="showScreen('cadastro')">Cadastrar</button>
+                <button onclick="showScreen('alterar')">Alterar</button>
+                <button onclick="showScreen('buscar')">Buscar</button>
+            </div>
+
+
+            <div id="cadastro" class="screen active">
+                    <h2>Cadastrar Usuário</h2>
+                    <form id="registerForm" action="/usuario/registro" method="post" enctype="multipart/form-data">
+                        
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome">
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email">
+                        
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username">
+                        
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" name="cpf">
+                        
+                        <label for="data_nascimento">Data de Nascimento:</label>
+                        <input type="date" id="data_nascimento" name="data_nascimento">
+                        
+                        <label for="ctt">Contato:</label>
+                        <input type="text" id="ctt" name="ctt">
+                        
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="senha" name="senha">
+                        
+                        <label for="identificador">Identificador:</label>
+                        <select id="identificador" name="identificador">
+                            <option value="1">Administrador</option>
+                            <option value="2">Condômino</option>
+                            <option value="3">Porteiro</option>
+                        </select>
+
+                        <label for="dependentes">Dependentes:</label>
+                        <div id="dependentes">
+                            <!-- O primeiro dependente é adicionado pelo JavaScript -->
+                        </div>
+                        <button type="submit" onclick="adicionarDependente()">Adicionar Dependente</button>
+                        <button type="submit" onclick="excluirUltimoDependente()">Excluir Dependente</button>
+                        <label for="admissao">Data de Admissão:</label>
+                        <input type="date" id="admissao" name="admissao">
+                        
+                        <label for="file">Foto do Usuário:</label>
+                        <input type="file" name="file" id="file" accept=".png, .jpeg, .jpg" required>
+                        <input type="submit" value="Cadastrar">
+                    </form>
+                </div>
+
+
+            <div id="alterar" class="screen">
+                <h2>Alterar Usuário</h2>
+                <p>Digite o ID do usuário que deseja alterar:</p>
+                <div class="input-com-icone-alterar">
+                    <input type="text" id="idUsuarioAlterar" placeholder="ID do usuário" class="input-icone-alt">
+                    <span class="icone-lupa" onclick="buscarAlterarUsuario()"><i class="bi bi-search"></i></span>
+                </div>
+                
+                <form id="formAlterar" action="/usuario/alterar" method="POST" enctype="application/x-www-form-urlencoded">
+                    <label for="id">ID:</label>
+                    <input type="text" id="idAlterar" name="id" readonly>
+                    
+                    <label for="nomeAlterar">Nome:</label>
+                    <input type="text" id="nomeAlterar" name="nome">
+                    
+                    <label for="emailAlterar">Email:</label>
+                    <input type="email" id="emailAlterar" name="email">
+                    
+                    <label for="usernameAlterar">User Name:</label>
+                    <input type="text" id="usernameAlterar" name="username">
+                    
+                    <label for="cpfAlterar">CPF:</label>
+                    <input type="text" id="cpfAlterar" name="cpf">
+                    
+                    <label for="data_nascimentoAlterar">Data de Nascimento:</label>
+                    <input type="date" id="data_nascimentoAlterar" name="data_nascimento">
+                    
+                    <label for="cttAlterar">Contato:</label>
+                    <input type="text" id="cttAlterar" name="ctt">
+                    
+                    <label for="senhaAlterar">Senha:</label>
+                    <input type="password" id="senhaAlterar" name="senha">
+                    
+                    <label for="identificadorAlterar">Identificador:</label>
+                    <select id="identificadorAlterar" name="identificador">
+                        <option value="1">Administrador</option>
+                        <option value="2">Condômino</option>
+                        <option value="3">Porteiro</option>
+                    </select>
+            
+                    <label for="dependentes">Dependentes:</label>
+                        <div id="dependentesAlterar">
+                            <!-- O primeiro dependente é adicionado pelo JavaScript -->
+                        </div>
+                        <button type="submit" onclick="adicionarDependenteAlterar()">Adicionar Dependente</button>
+                        <button type="submit" onclick="excluirUltimoDependenteAlterar()()">Excluir Dependente</button>
+                    
+                    <label for="admissaoAlterar">Data de Admissão:</label>
+                    <input type="date" id="admissaoAlterar" name="admissao">
+                    
+                    <input type="submit" value="Alterar">
+                </form>
+            </div>            
+
+
+            <div id="buscar" class="screen">
+                <h2>Buscar Usuário</h2>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="bi bi-search"></i></span>
+                    <input name="consulta" id="txt_consulta" placeholder="Consultar" type="text" class="form-control">
+                </div>
+                <table id="tabela" class="table table-hover">
+                    <thead>
+                        <tr>
+                            
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>CPF</th>
+                            <th>Identificador</th>
+                            <th>Username</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>            
+
+        </div>
+        
+        <div id="reservas" class="section">
+            <h1>Reservar Espaços</h1>
+        
+            <div class="buttons">
+                <button onclick="showScreen('cadastrar_espaco')">Cadastrar Espaço</button>
+                <button onclick="showScreen('agendar_espaco')">Agendar Espaço</button>
+                <button onclick="showScreen('buscar_espaco')">Buscar Espaco</button>
+            </div>
+            <div id="cadastrar_espaco" class="screen">
+                <form id="formCadastroEspaco"  action="/espacoscomuns" method="post" enctype="application/x-www-form-urlencoded">
+                    <label for="nome_espaco">Nome do Espaço:</label>
+                    <input type="text" id="nome_espaco" name="nome_espaco">
+                    
+                    <input type="text" id="id_espaco" name="id_espaco" hidden>
+                    <input type="submit" value="Cadastrar Espaço">
+                </form>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="bi bi-search"></i></span>
+                    <input name="consulta" id="txt_consulta_espaco" placeholder="Consultar" type="text" class="form-control">
+                </div>
+                <table id="tabela_espaco" class="table table-hover">
+                    <thead>
+                        <tr> 
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo-espaco">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>
+        
+            <div id="agendar_espaco" class="screen active">
+                <form id="formAgendamento"  action="/agendamento" method="post" enctype="application/x-www-form-urlencoded">
+                    <label for="data_inicio">Data de Início:</label>
+                    <input type="datetime-local" id="data_inicio" name="data_inicio">
+                    
+                    <label for="data_fim">Data de Término:</label>
+                    <input type="datetime-local" id="data_fim" name="data_fim">
+                    
+                    <label for="espaco_id">Espaço Comum:</label>
+                    <select id="select-espaco-comum" name="espaco_id">
+                        <!-- Opções de espaços comuns serão preenchidas dinamicamente aqui -->
+                    </select>
+                    <input type="text" id="usuarios_id" name="usuarios_id" hidden>
+
+                    <input type="hidden" id="old_data_inicio" name="old_data_inicio">
+                    <input type="hidden" id="old_data_fim" name="old_data_fim">
+                    <input type="hidden" id="old_espaco_id" name="old_espaco_id">
+                    <input type="hidden" id="old_usuarios_id" name="old_usuarios_id">
+                    <input type="submit" id = "submitButton" value="Agendar">
+                </form>
+                <div class="">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+            <div id="buscar_espaco" class="screen">
+                <h2>Buscar Espaços</h2>
+                <!--
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="bi bi-search"></i></span>
+                    <input name="consulta" id="txt_consulta_espaco" placeholder="Consultar" type="text" class="form-control">
+                </div>
+                <table id="tabela_espaco" class="table table-hover">
+                    <thead>
+                        <tr> 
+                            <th>Id</th>
+                            <th>Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo-espaco">
+                        Aqui ficam os dados da tabela requisição do back
+                    </tbody>
+                </table>
+                -->
+            </div>
+        </div>
+        
+        <div id="regulamentos" class="section">
+            <h1>Gerenciar Regulamentos</h1>
+            <div class="buttons">
+                <button onclick="showScreen('cadastro')">Cadastrar</button>
+                <button onclick="showScreen('alterar')">Alterar</button>
+                <button onclick="showScreen('buscar')">Buscar</button>
+            </div>
+            
+            <div id="cadastro" class="screen active">             
+                <div class="upload-form" id="cadastrar_doc">
+                    <h2>Carregar Novo Regulamento</h2>
+                    <form action="/documentacao" method="post" enctype="multipart/form-data">
+                        <label for="titulo_doc">Título do Documento:</label>
+                        <input type="text" name="titulo_doc" id="titulo_doc" required>
+
+                        <label for="assunto_doc">Assunto do Documento:</label>
+                        <input type="text" name="assunto_doc" id="assunto_doc" required>
+
+                        <label for="data_doc">Data do Documento:</label>
+                        <input type="date" name="data_doc" id="data_doc" required>
+
+                        <label for="file">Escolha o arquivo:</label>
+                        <input type="file" name="file" id="file" accept=".pdf,.doc,.docx" required>
+
+
+                        <input type="submit" value="Carregar">
+                    </form>
+                </div>
+            </div>
+
+            <div id="alterar" class="screen">
+                <p>Digite o ID do regulamento que deseja alterar:</p>
+                <div class="input-com-icone-alterar">
+                    <input type="text" id="idRegulamentoAlterar" placeholder="ID do regulamento" class="input-icone-alt">
+                    <span class="icone-lupa" onclick="buscarAlterarRegulamento()"><i class="bi bi-search"></i></span>
+                </div>
+                <div class="upload-form" id="cadastrar_doc">
+                    <h2>Alterar Regulamento</h2>
+                    <form action="/documentacao/atualizar" method="post" enctype="multipart/form-data">
+                        <label for="titulo_doc">Título do Documento:</label>
+                        <input type="text" name="titulo_doc" id="titulo_doc_atualizar" required>
+
+                        <label for="assunto_doc">Assunto do Documento:</label>
+                        <input type="text" name="assunto_doc" id="assunto_doc_atualizar" required>
+
+                        <label for="data_doc">Data do Documento:</label>
+                        <input type="date" name="data_doc" id="data_doc_atualizar" required>
+
+                        <label for="file">Escolha o arquivo:</label>
+                        <input type="file" name="file" id="fileatualizar" accept=".pdf,.doc,.docx">
+                        <input type="text" name="ID_doc" id="ID_doc" hidden>
+                        <input type="submit" value="Carregar">
+                    </form>
+                </div>
+            </div>
+
+            <div id="buscar" class="screen">
+                <p>Digite o ID do regulamento que deseja encontrar:</p>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="bi bi-search"></i></span>
+                    <input name="consulta" id="txt_doc_consulta" placeholder="Consultar" type="text" class="form-control">
+                </div>
+                <table id="tabela" class="table table-hover">
+                    <thead>
+                        <tr>
+                            
+                            <th>Id</th>
+                            <th>Titulo do documento</th>
+                            <th>Assunto do documento</th>
+                            <th>Data do documento</th>
+                            <th>Download Arquivo</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentacoes-table-body">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div id="manutencoes" class="section">
+            <div id="manutencoes_tela" class="screen active">
+                <h1>Manutenções</h1>
+                <form class="form_manutencao" action="/notificacoes" method="post" enctype="application/x-www-form-urlencoded">
+                    <label for="nome">Tipo de Serviço:</label>
+                    <input type="text" id="servico" name="mensagem">
+                    <label for="data_manutencao">Data da Manutenção:</label>
+                    <input type="date" id="data_manutencao" name="data_manutencao">
+                    <input class="btn_manutencao" type="submit" value="Cadastrar Manutenção">
+                    </form>
+                </div>
+        </div>
+        <div id="financeiro" class="section">
+            <h1>Financeiro</h1>
+            <div class="buttons">
+                <button onclick="showScreen('cadastrar_boleto')">Cadastrar Boleto</button>
+                <button onclick="showScreen('reclamacoes')">Reclamações</button>
+            </div>
+
+            <div id="cadastrar_boleto" class="screen">
+                <h2>Cadastrar Boleto</h2>
+                <form id="formPagamento" action="/taxas" method="post" enctype="multipart/form-data">
+
+                    <label for="nome_username">User Name:</label>
+                    <select id="select-username" name="nome_username" required>
+                        <!-- Opções de espaços comuns serão preenchidas dinamicamente aqui -->
+                    </select>
+
+                    <label for="valor">Valor:</label>
+                    <input type="number" id="valor" name="valor" min="0" step="0.01" required>
+                    
+                    <label for="data_venc">Data de Vencimento:</label>
+                    <input type="date" id="data_venc" name="data_venc" required>
+
+                    <label for="boleto">Boleto:</label>
+                    <input type="file" name="boleto" accept=".pdf,.doc,.docx" required>
+                    
+                    <input type="submit" value="Enviar Boleto">
+                </form>
+            </div>
+        
+            <div id="reclamacoes" class="screen">
+                <h2>Reclamações sobre Boletos</h2>
+                <table id="tabela" class="table table-hover">
+                    <thead>
+                        <tr>
+                            
+                            <th>Id</th>
+                            <th>Nome do Condômino</th>
+                            <th>Email do Condômino</th>
+                            <th>Mês do Boleto</th>
+                            <th>Reclamação</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo-reclamacoes">
+                        <!-- Aqui ficam os dados da tabela requisição do back-->
+                    </tbody>
+                </table>
+               
+            </div>
+            
+        </div>
+
+        <div id="perfil" class="section">
+            <div id="tela_perfil">
+                <h1>Perfil</h1>
+                <div>
+                    <div id="informacoes_perfil">
+                        </div>
+                        <div id="alter-user">
+                            <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
+                        </div>
+                </div>
+
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>Editar Informações</h2>
+                                <form id="editForm" action="/usuario/atualizar_perfil" method="post" enctype="multipart/form-data">
+                                    <label for="nome">Nome:</label>
+                                    <input type="text" id="nome_alterar" name="nome_alterar">
+                                    
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email_alterar" name="email_alterar">
+            
+                                    <label for="ctt">Contato:</label>
+                                    <input type="text" id="ctt_alterar" name="ctt_alterar">
+            
+                                    <label for="senha">Senha:</label>
+                                    <input type="password" id="senha_alterar" name="senha_alterar">
+                                    
+                                    <label for="file">Foto do Usuário:</label>
+                                    <input type="file" name="file_alterar" id="file_modal" accept=".png, .jpeg, .jpg">
+                                    <button type="submit">Salvar</button>
+                                </form>
+                            </div>
+                        </div>
+    
+                
+            </div>
+        </div>
+    </div>
+    <script src="../static/js/menu.js"></script>
+    <script src="../static/js/gerenciarUsuarios.js"></script>
+    <script src="../static/js/gerenciarAgendamento.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/usuario/condominos',
+                method: 'GET',
+                success: function(data) {
+                    var select = $('#select-username');
+                    select.empty(); // Limpa as opções atuais
+                    select.append('<option value="" disabled selected>Selecione um usuário</option>'); // Adiciona uma opção padrão
+
+                    data.forEach(function(user) {
+                        select.append('<option value="' + user.id + '">' + user.username + '</option>');
+                    });
+                },
+                error: function() {
+                    alert('Erro ao buscar usuários.');
+                }
+            });
+        });
+
+        function loadUserProfile() {
+            $.ajax({
+                url: `/usuario/perfil`,
+                method: 'GET',
+                success: function(data) {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        $('#informacoes_perfil').html(`
+                            <div class="perfil-imagem">
+                                <img src="data:image/jpeg;base64,${data.imagem}" alt="Foto Redonda" class="foto-redonda">
+                            </div>
+                            <p><strong>E-mail:</strong> ${data.email}</p>
+                            <p><strong>Nome:</strong> ${data.nome}</p>
+                            <p><strong>CPF:</strong> ${data.cpf}</p>
+                            <p><strong>Data de Nascimento:</strong> ${data.data_nascimento}</p>
+                            <p><strong>Identificador:</strong> ${data.identificador}</p>
+
+                            
+    
+                        `);
+                        document.getElementById('nome_alterar').value = data.nome;
+                        document.getElementById('email_alterar').value = data.email;
+                        document.getElementById('ctt_alterar').value = data.ctt;
+                        document.getElementById('senha_alterar').value = data.senha;
+                    }
+                },
+                error: function() {
+                    alert('Erro ao buscar dados do usuário.');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            loadUserProfile();
+        });
+        $(document).ready(function() {
+            // URL da API
+            var apiURL = '/taxas/reclamacao';
+
+            // Fazer a requisição AJAX
+            $.ajax({
+                url: apiURL,
+                method: 'GET',
+                success: function(data) {
+                    // Assumindo que 'data' é uma lista de objetos
+                    console.log(data)
+                    var tabelaCorpo = $('#tabela-corpo-reclamacoes');
+                    data.forEach(function(reclamacao) {
+                        var statusHtml = '';
+                        if (reclamacao.status === 0) {
+                            statusHtml = '<i class="fas fa-exclamation-circle text-warning"></i> Pendente';
+                        } else if (reclamacao.status === 1) {
+                            statusHtml = '<i class="fas fa-check-circle text-success"></i> Resolvido';
+                        }
+                        var row = `
+                            <tr>
+                                <td>${reclamacao.id}</td>
+                                <td>${reclamacao.nome}</td>
+                                <td>${reclamacao.email}</td>
+                                <td>${reclamacao.data_boleto}</td>
+                                <td>${reclamacao.texto_reclamacao}</td>
+                                <td>${statusHtml}</td>
+                                <td><button class="btn btn-primary" onclick="atualizarStatus(${reclamacao.id}, ${reclamacao.status === 0 ? 1 : 0})">Atualizar Status</button></td>                            </tr>
+                        `;
+                        tabelaCorpo.append(row);
+                    });
+                },
+                error: function(error) {
+                    console.log('Erro ao buscar dados: ', error);
+                }
+            });
+        });
+        function atualizarStatus(id, novoStatus) {
+            $.ajax({
+                url: '/taxas/atualizar_status',
+                method: 'POST',
+                data: { id: id, status: novoStatus },
+                success: function(response) {
+                    alert('Status atualizado com sucesso');
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log('Erro ao atualizar status: ', error);
+                    alert('Erro ao atualizar status');
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/documentacao/documento')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    const tableBody = document.getElementById('documentacoes-table-body');
+                    data.forEach(doc => {
+                        const row = document.createElement('tr');
+                        
+                        const idCell = document.createElement('td');
+                        idCell.textContent = doc.id;
+                        row.appendChild(idCell);
+                        
+                        const nomeCell = document.createElement('td');
+                        nomeCell.textContent = doc.nome;
+                        row.appendChild(nomeCell);
+                        
+                        const assuntoCell = document.createElement('td');
+                        assuntoCell.textContent = doc.assunto_documento;
+                        row.appendChild(assuntoCell);
+                        
+                        const dataCell = document.createElement('td');
+                        dataCell.textContent = doc.data;
+                        row.appendChild(dataCell);
+                        
+                        const actionCell = document.createElement('td');
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = `/documentacao/download/${doc.id}`;
+                        downloadLink.textContent = 'Download';
+                        actionCell.appendChild(downloadLink);
+                        row.appendChild(actionCell);
+
+                        const deleteCell = document.createElement('td');
+                        const deleteLink = document.createElement('a');
+                        deleteLink.href = '#'; // Evitar redirecionamento padrão
+                        deleteLink.textContent = 'Excluir';
+                        deleteLink.addEventListener('click', function(event) {
+                            event.preventDefault(); // Evita o comportamento padrão do link
+
+                            // Cria o formulário
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = `/documentacao/delete/${doc.id}`;
+
+                            // Adiciona um input oculto com o valor do ID (opcional)
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'docId';
+                            input.value = doc.id;
+                            form.appendChild(input);
+
+                            // Adiciona o formulário ao body e o envia
+                            document.body.appendChild(form);
+                            form.submit();
+                            window.location.reload();
+                        });
+                        deleteCell.appendChild(deleteLink);
+                        row.appendChild(deleteCell);
+                        
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching documentações:', error));
+        });
+        
+        function buscarAlterarRegulamento() {
+            var idRegulamento = document.getElementById('idRegulamentoAlterar').value;
+            if (!idRegulamento) {
+                alert('Por favor, insira um ID de usuário.');
+                return;
+            }
+            fetch(`/documentacao/${idRegulamento}`) // Substitua pela URL da sua API
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    document.getElementById("ID_doc").value = data.id;
+                    document.getElementById("titulo_doc_atualizar").value = data.name;
+                    document.getElementById("assunto_doc_atualizar").value = data.assunto;
+                    document.getElementById("data_doc_atualizar").value = new Date(data.data).toISOString().split('T')[0];
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                    alert('Usuário não encontrado.');
+                });
+                }
+            document.addEventListener("DOMContentLoaded", function() {
+                const txtConsulta = document.getElementById('txt_doc_consulta');
+                const tabelaCorpo = document.getElementById('documentacoes-table-body');
+
+                // Função para filtrar os dados da tabela
+                function filtrarTabela() {
+                    const termo = txtConsulta.value.trim().toLowerCase(); // Obtém o termo de busca em minúsculas
+                    
+                    Array.from(tabelaCorpo.getElementsByTagName('tr')).forEach(function(linha) {
+                        const colunas = linha.getElementsByTagName('td');
+                        let encontrou = false;
+                        
+                        // Verifica cada coluna da linha se contém o termo de busca
+                        Array.from(colunas).forEach(function(coluna, index) {
+                            if (coluna.textContent.toLowerCase().includes(termo)) {
+                                encontrou = true;
+                                return;
+                            }
+                        });
+
+                        // Exibe ou oculta a linha com base no resultado da busca
+                        if (encontrou) {
+                            linha.style.display = '';
+                        } else {
+                            linha.style.display = 'none';
+                        }
+                    });
+                }
+
+                // Adiciona um evento de input ao campo de busca
+                txtConsulta.addEventListener('input', filtrarTabela);
+            });
+
+            // Obtém os elementos da modal
+            var modal = document.getElementById("editModal");
+            var btn = document.getElementById("editBtn");
+            var span = document.getElementsByClassName("close")[0];
+
+            // Quando o usuário clicar no botão, abre a modal
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // Quando o usuário clicar no X, fecha a modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // Quando o usuário clicar fora da modal, fecha a modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+    </script>
+       
+</body>
+
+</html>

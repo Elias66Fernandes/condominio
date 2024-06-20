@@ -1,14 +1,13 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, redirect, render_template
 from models import EspacosComuns
 from database import get_db_session
-
+from utils import login_required
 space_bp = Blueprint('space_bp', __name__)
-
+@login_required
 @space_bp.route('/', methods=['POST'])
 def registro_espacos():
-
     data = request.form
-    nome = data['nome']
+    nome = data['nome_espaco']
     session = next(get_db_session())
 
     if session.query(EspacosComuns).filter(EspacosComuns.nome == nome).first():
@@ -19,20 +18,21 @@ def registro_espacos():
     session.add(novo_espaco)
     session.commit()
     session.close()
-    return jsonify({'message': 'Espaço adicionado com sucesso'}), 201
-
+    return render_template("pag_adm.html")
+@login_required
 @space_bp.route('/', methods=['GET'])
 def get_espacos_comuns():
     session = next(get_db_session())
     espacos = session.query(EspacosComuns).all()
     session.close()
     return jsonify([{'id': espaco.id, 'name': espaco.nome} for espaco in espacos])
-
-@space_bp.route('/', methods=['PUT'])
+@login_required
+@space_bp.route('/atualizar', methods=['POST'])
 def atualizar_espaco():
     data = request.form
-    espaco_id = int(data.get('id'))
-    novo_nome = data.get('nome')
+    print(data)
+    espaco_id = int(data.get('id_espaco'))
+    novo_nome = data.get('nome_espaco')
 
     if not espaco_id:
         return jsonify({'error': 'ID do espaço é necessário'}), 400
@@ -47,8 +47,8 @@ def atualizar_espaco():
     espaco.nome = novo_nome
     session.commit()
     session.close()
-    return jsonify({'message': 'Espaço atualizado com sucesso'}), 200
-
+    return render_template("pag_adm.html")
+@login_required
 @space_bp.route('/<int:espaco_id>', methods=['DELETE'])
 def excluir_espaco(espaco_id):
     session = next(get_db_session())
@@ -61,4 +61,4 @@ def excluir_espaco(espaco_id):
     session.delete(espaco)
     session.commit()
     session.close()
-    return jsonify({'message': 'Espaço excluído com sucesso'}), 200
+    return render_template("pag_adm.html")

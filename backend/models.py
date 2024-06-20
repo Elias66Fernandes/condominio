@@ -17,6 +17,8 @@ class Usuarios(Base):
     identificador = Column(Integer, nullable=False)
     dependentes = Column(JSON, nullable=True)
     admissao = Column(Date, nullable=True)
+    imagem = Column(LargeBinary, nullable=True)
+
 
 class EspacosComuns(Base):
     __tablename__ = 'espacoscomuns'
@@ -37,7 +39,16 @@ class Taxas(Base):
     valor = Column(Double, nullable=False)
     data_venc = Column(Date, nullable=False)
     data_cadastro=Column(Date, nullable=False)
-    boleto = Column(LargeBinary, nullable=False) 
+    boleto = Column(LargeBinary, nullable=False)
+
+class Reclamacoes(Base):
+    __tablename__ = 'reclamacoes'
+    id = Column(Integer, primary_key=True)
+    usuarios_id = Column(Integer, ForeignKey('usuarios.id'))
+    data_boleto=Column(Date, nullable=False)
+    texto_reclamacao = Column(String, nullable=False)
+    status = Column(Integer, nullable=False)
+
 
 class Agendamento(Base):
     __tablename__ = 'agendamento'
@@ -54,12 +65,14 @@ class Notificacao(Base):
     mensagem = Column(Text, nullable=False)
     data = Column(Date, nullable=False)
 
-class Documentacoes(Base):
-    __tablename__ = 'documentacoes'
+class Documentacoes2(Base):
+    __tablename__ = 'documentacoes2'
     id = Column(Integer, primary_key=True)
-    usuarios_id = Column(Integer, ForeignKey('usuarios.id'))
     nome = Column(String, nullable=False)
-    documento = Column(LargeBinary, nullable=False) 
+    assunto = Column(String, nullable=False)
+    documento = Column(LargeBinary, nullable=False)
+    data = Column(Date, nullable=False) 
+
 
 DATABASE_URL = "sqlite:///database.db"
 engine = create_engine(DATABASE_URL)
