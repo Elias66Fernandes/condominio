@@ -1010,6 +1010,6 @@ nav.menu-lateral.expandir + .content {
     margin: 0 auto;
 }
 
-#salvar_space{
+#salvar_space, #submitButton{
     margin-bottom: 30px;
 }
