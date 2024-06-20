@@ -221,7 +221,6 @@
             <div class="buttons">
                 <button onclick="showScreen('cadastrar_espaco')">Cadastrar Espaço</button>
                 <button onclick="showScreen('agendar_espaco')">Agendar Espaço</button>
-                <button onclick="showScreen('buscar_espaco')">Buscar Espaco</button>
             </div>
             <div id="cadastrar_espaco" class="screen">
                 <form id="formCadastroEspaco"  action="/espacoscomuns" method="post" enctype="application/x-www-form-urlencoded">
@@ -229,7 +228,7 @@
                     <input type="text" id="nome_espaco" name="nome_espaco">
                     
                     <input type="text" id="id_espaco" name="id_espaco" hidden>
-                    <input type="submit" value="Cadastrar Espaço">
+                    <input type="submit" id= "salvar_space" value="Salvar">
                 </form>
                 <div class="form-group input-group">
                     <span class="input-group-addon"><i class="bi bi-search"></i></span>
@@ -272,26 +271,6 @@
                 <div class="">
                     <div id="calendar"></div>
                 </div>
-            </div>
-            <div id="buscar_espaco" class="screen">
-                <h2>Buscar Espaços</h2>
-                <!--
-                <div class="form-group input-group">
-                    <span class="input-group-addon"><i class="bi bi-search"></i></span>
-                    <input name="consulta" id="txt_consulta_espaco" placeholder="Consultar" type="text" class="form-control">
-                </div>
-                <table id="tabela_espaco" class="table table-hover">
-                    <thead>
-                        <tr> 
-                            <th>Id</th>
-                            <th>Nome</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabela-corpo-espaco">
-                        Aqui ficam os dados da tabela requisição do back
-                    </tbody>
-                </table>
-                -->
             </div>
         </div>
         
