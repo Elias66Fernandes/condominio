@@ -55,14 +55,14 @@
     </nav>
 
     <div class="content">
-        <div id="visitantes" class="section">
-            <div id="tela_visitantes" class="screen active">
+
+        <div id="visitantes" class="section active">
+            <div id="tela_visitantes" class="conteiner">
                 <h1>Visitantes de Hoje</h1>
-                
                 <table id="tabela" class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Unidade</th>
+                            <th>Morador</th>
                             <th>Visitantes</th>
                         </tr>
                     </thead>
@@ -72,16 +72,20 @@
                 </table>
             </div>
         </div>
+        
+
         <div id="reservas" class="section">
-            <div id="tela_reservas" class="screen ">
+            <div id="tela_reservas" class="conteiner">
                 <h1>Visualizar Reservas</h1>
                 <div class="">
                     <div id="calendar-2"></div>
                 </div>
             </div>
         </div>
+
+
         <div id="manutencoes" class="section">
-            <div id="tela_manutencoes" class="screen ">
+            <div id="tela_manutencoes" class="conteiner">
                 <h1>Manutenções</h1>
                 <form class="form_manutencao" action="/notificacoes" method="post" enctype="application/x-www-form-urlencoded">
                     <label for="nome">Tipo de Serviço:</label>
@@ -90,47 +94,46 @@
                     <input type="date" id="data_manutencao" name="data_manutencao">
                     <input class="btn_manutencao" type="submit" value="Cadastrar Manutenção">
                 </form>
+            </div>
+        </div>
+
+
+        <div id="perfil" class="section">
+            <div id="tela_perfil" class="conteiner">
+                <h1>Perfil</h1>
+                <div id="informacoes_perfil">
+                    <div id="alter-user">
+                        <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
+                    </div>
+                </div>
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2>Editar Informações</h2>
+                            <form id="editForm" action="/usuario/atualizar_perfil" method="post" enctype="multipart/form-data">
+                                <label for="nome">Nome:</label>
+                                <input type="text" id="nome_alterar" name="nome_alterar">
+                                
+                                <label for="email">Email:</label>
+                                <input type="email" id="email_alterar" name="email_alterar">
+        
+                                <label for="ctt">Contato:</label>
+                                <input type="text" id="ctt_alterar" name="ctt_alterar">
+        
+                                <label for="senha">Senha:</label>
+                                <input type="password" id="senha_alterar" name="senha_alterar">
+                                
+                                <label for="file">Foto do Usuário:</label>
+                                <input type="file" name="file_alterar" id="file_modal" accept=".png, .jpeg, .jpg">
+                                <button type="submit">Salvar</button>
+                            </form>
+                    </div>
                 </div>
             </div>
-            <div id="perfil" class="section">
-                <div id="tela_perfil" class="screen ">
-                    <h1>Perfil</h1>
-                    <div>
-                        <div id="informacoes_perfil">
-                            </div>
-                            <div id="alter-user">
-                                <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
-                            </div>
-                    </div>
-                    <div id="editModal" class="modal">
-                        <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <h2>Editar Informações</h2>
-                                <form id="editForm" action="/usuario/atualizar_perfil" method="post" enctype="multipart/form-data">
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" id="nome_alterar" name="nome_alterar">
-                                    
-                                    <label for="email">Email:</label>
-                                    <input type="email" id="email_alterar" name="email_alterar">
-            
-                                    <label for="ctt">Contato:</label>
-                                    <input type="text" id="ctt_alterar" name="ctt_alterar">
-            
-                                    <label for="senha">Senha:</label>
-                                    <input type="password" id="senha_alterar" name="senha_alterar">
-                                    
-                                    <label for="file">Foto do Usuário:</label>
-                                    <input type="file" name="file_alterar" id="file_modal" accept=".png, .jpeg, .jpg">
-                                    <button type="submit">Salvar</button>
-                                </form>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+        </div>
 
     </div>
 
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.6/main.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.6/main.global.min.js"></script>
