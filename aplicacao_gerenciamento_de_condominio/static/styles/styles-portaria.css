@@ -402,3 +402,7 @@ nav.menu-lateral.expandir + .content {
     width: 100%;
     max-width: 600px;
 }
+
+#alter-user{
+    margin-top: 60%;
+}
