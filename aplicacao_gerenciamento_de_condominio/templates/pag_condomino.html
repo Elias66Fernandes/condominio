@@ -284,7 +284,6 @@
                         document.getElementById('nome_alterar').value = data.nome;
                         document.getElementById('email_alterar').value = data.email;
                         document.getElementById('ctt_alterar').value = data.ctt;
-                        document.getElementById('senha_alterar').value = data.senha;
                     }
                 },
                 error: function() {
@@ -589,9 +588,25 @@
                 botaoExcluir.addEventListener('click', () => {
                     // Lógica para excluir o registro
                     if (confirm(`Deseja realmente excluir o registro de ${registro.data_visita}?`)) {
-                        // Remova a linha da tabela
-                        console.log("Caralho")
-                        // Adicione aqui a lógica para remover o registro do seu backend, se necessário
+                        fetch(`/visitantes/${registro.id}`, { // Substitua pela sua rota
+                            method: 'DELETE'
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro na requisição: ' + response.statusText);
+                            }
+                            return response.json(); // ou response.text(), response.blob(), etc., dependendo do tipo de resposta
+                        })
+                        .then(data => {
+                            console.log('Requisição bem-sucedida:', data);
+                            location.reload()
+                            // Aqui você pode fazer algo com os dados recebidos
+                        })
+                        .catch(error => {
+                            console.error('Erro na requisição:', error);
+                            // Aqui você pode lidar com o erro
+                        });
+
                     }
                 });
 

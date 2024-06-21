@@ -163,7 +163,6 @@
                         document.getElementById('nome_alterar').value = data.nome;
                         document.getElementById('email_alterar').value = data.email;
                         document.getElementById('ctt_alterar').value = data.ctt;
-                        document.getElementById('senha_alterar').value = data.senha;
                     }
                 },
                 error: function() {
@@ -269,13 +268,13 @@
 
         function agruparPorUsuario(data,dados_usuarios) {
             const dataHoje = new Date().toISOString().split('T')[0]; // Data de hoje no formato YYYY-MM-DD
+            console.log(dataHoje)
             const agrupado = {};
 
             data.forEach(registro => {
                 if (registro.data_visita === dataHoje) {
                     const userId = registro.usuarios_id;
-                    const visitante = registro.visitantes.map(v => v.nome).join(', ');
-
+                    const visitante = registro.visitantes.map(pessoa => `${pessoa.nome}: ${pessoa.cpf}`).join(', ');
                     if (!agrupado[userId]) {
                         agrupado[userId] = {
                             username: `${getUsernameById(dados_usuarios,userId)}`, // Substitua pela lógica real para obter o username

@@ -53,7 +53,7 @@ def download_latest_boleto():
         # Query to find the most recent boleto by data_venc
         file_entry = (session.query(Taxas)
                       .filter_by(usuarios_id=usuario_id)
-                      .order_by(desc(Taxas.data_venc))
+                      .order_by(Taxas.data_venc.desc())
                       .first())
         
         if file_entry:

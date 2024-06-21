@@ -88,20 +88,14 @@ def get_perfil():
 @user_bp.route('/atualizar_perfil', methods=['GET','POST'])
 def atualizar_perfil():
     if request.method == 'POST':
+        
         data = request.form
         nome = data['nome_alterar']
         email = data['email_alterar']
         ctt = data['ctt_alterar']
         password = data['senha_alterar']
         imagem = request.files['file_alterar']
-        if imagem:
-            caminho_imagem = os.path.join(UPLOAD_FOLDER, imagem.filename)
-            imagem.save(caminho_imagem)
-            with open(caminho_imagem, 'rb') as file:
-                blob = file.read()
-            
-            # Convertendo a imagem para binário
-            imagem_blob = blob
+        
 
 
         session = next(get_db_session())
@@ -115,18 +109,35 @@ def atualizar_perfil():
         
         if email:
             usuario.email=email
-        if password:
+        if password!='':
             hashed_password = hash_password(password)
             usuario.senha=hashed_password
         if ctt:
             usuario.ctt=ctt
         
-
+        if imagem:
+            caminho_imagem = os.path.join(UPLOAD_FOLDER, imagem.filename)
+            imagem.save(caminho_imagem)
+            with open(caminho_imagem, 'rb') as file:
+                blob = file.read()
+            
+            # Convertendo a imagem para binário
+            imagem_blob = blob
+            usuario.imagem=imagem_blob
+        
+    if usuario.identificador==1:
         session.commit()
         session.close()
-        
-    return render_template('pag_adm.html')
+        return render_template('pag_adm.html')
 
+    elif usuario.identificador==2:
+        session.commit()
+        session.close()
+        return render_template('pag_condomino.html')
+    else:
+        session.commit()
+        session.close()
+        return render_template('pag_portaria.html')
 
 
 @user_bp.route('/', methods=['GET'])
