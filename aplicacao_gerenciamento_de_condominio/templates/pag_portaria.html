@@ -99,37 +99,41 @@
 
 
         <div id="perfil" class="section">
-            <div id="tela_perfil" class="conteiner">
+            <div id="tela_perfil">
                 <h1>Perfil</h1>
+                <div>
+                    <div id="informacoes_perfil">
+                        </div>
+                        <div id="alter-user">
+                            <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
+                        </div>
+                </div>
+
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>Editar Informações</h2>
+                                <form id="editForm" action="/usuario/atualizar_perfil" method="post" enctype="multipart/form-data">
+                                    <label for="nome">Nome:</label>
+                                    <input type="text" id="nome_alterar" name="nome_alterar">
+                                    
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email_alterar" name="email_alterar">
             
-                <div id="alter-user">
-                    <!--Botão-->
-                    <button id="editBtn" class="alt-user"><i class="bi bi-pencil-square"></i> Editar Informações</button>
-                </div>
+                                    <label for="ctt">Contato:</label>
+                                    <input type="text" id="ctt_alterar" name="ctt_alterar">
+            
+                                    <label for="senha">Senha:</label>
+                                    <input type="password" id="senha_alterar" name="senha_alterar">
+                                    
+                                    <label for="file">Foto do Usuário:</label>
+                                    <input type="file" name="file_alterar" id="file_modal" accept=".png, .jpeg, .jpg">
+                                    <button type="submit">Salvar</button>
+                                </form>
+                            </div>
+                        </div>
     
-                <div id="editModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2>Editar Informações</h2>
-                        <form id="editForm" action="/usuario/atualizar_perfil" method="post" enctype="multipart/form-data">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome_alterar" name="nome_alterar">
-                            
-                            <label for="email">Email:</label>
-                            <input type="email" id="email_alterar" name="email_alterar">
-    
-                            <label for="ctt">Contato:</label>
-                            <input type="text" id="ctt_alterar" name="ctt_alterar">
-    
-                            <label for="senha">Senha:</label>
-                            <input type="password" id="senha_alterar" name="senha_alterar">
-                            
-                            <label for="file">Foto do Usuário:</label>
-                            <input type="file" name="file_alterar" id="file_modal" accept=".png, .jpeg, .jpg">
-                            <button type="submit">Salvar</button>
-                        </form>
-                    </div>
-                </div>
+                
             </div>
         </div>
 
